@@ -1,0 +1,14 @@
+package main
+
+import (
+	"github.com/mateuszmierzwinski/libmicro"
+	"github.com/mateuszmierzwinski/libmicro/config/{{configProvider}}"
+)
+
+func main() {
+	(&libmicro.MicroApplication{}).
+		RegisterProviders(
+		).RegisterMiddleware(
+    ).
+		Execute({{configProvider}}.New())
+}
