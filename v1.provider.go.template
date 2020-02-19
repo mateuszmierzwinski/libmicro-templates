@@ -1,0 +1,32 @@
+package {{pkgName}}
+
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/mateuszmierzwinski/libmicro/config"
+	"github.com/mateuszmierzwinski/libmicro/providersvc"
+)
+
+type {{providerName}} struct {
+  cfg config.ConfigProvider
+}
+
+func (s {{providerName}}) GetInfo() *providersvc.APIInfo {
+	return &providersvc.APIInfo{ProviderName: "{{providerName}} Provider"}
+}
+
+func (s {{providerName}}) Register(router *gin.Engine, configProvider config.ConfigProvider) {
+  // sharing configProvider with this module
+  s.cfg = configProvider
+
+  // registering GET @ / to {{providerName}}.getQuery function
+	router.GET("/", s.getQuery)
+}
+
+func (s {{providerName}}) getQuery(ctx *gin.Context) {
+	ctx.String(http.StatusOK, "Hello world from {{pkgName}}.{{providerName}}!")
+}
+
+
+func New() providersvc.APIProvider {
+	return &{{providerName}}{}
+}
